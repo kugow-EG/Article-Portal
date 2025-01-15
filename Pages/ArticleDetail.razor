@@ -1,28 +1,44 @@
 ﻿@page "/article/{id:int}"
 @using ArticlePortal.Model
 @inject FetchDataServices DataService
-
-<h3>Article Details</h3>
-
-@if (Article == null)
+@inject NavigationManager NavigationManager
+@if (article == null)
 {
     <p>Loading...</p>
 }
 else
 {
-    <h4>@Article.Title</h4>
-    <p>@Article.Summary</p>
-    <p>@Article.FullText</p>
+    <div class="article-card">
+        <img src="@($"/images/article_{article.Id}.jpg")" alt="Article Image" class="article-image" />
+        <h4 class="article-title">@article.Title</h4>
+        <p class="article-summary">@article.Summary</p>
+        <p class="article-summary">@article.FullText</p>
+        <button class="read-more" @onclick="GoBack">Go Back</button>
+    </div>
 }
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
-    private Article? Article;
+    private Article? article;
 
     protected override async Task OnInitializedAsync()
     {
-        Article = await DataService.GetArticleByIdAsync(Id);
+        try
+        {
+            article = await DataService.GetArticleByIdAsync(Id);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Failed to fetch the article.");
+        }
     }
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+
+    }
+
 }
+

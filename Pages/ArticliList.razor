@@ -2,8 +2,6 @@
 @inject FetchDataServices DataService
 @inject NavigationManager NavigationManager
 
-<h3 class="header">Featured Articles</h3>
-
 @if (articles == null)
 {
     <p class="loading">Loading articles...</p>
@@ -17,7 +15,8 @@ else
     <div class="articles-grid">
         @foreach (var article in articles.OrderBy(t => t.Id))
         {
-            <div class="article-card" >
+            <div class="article-card">
+                <img src="@($"/images/article_{article.Id}.jpg")" alt="Article Image" class="article-image" />
                 <h4 class="article-title">@article.Title</h4>
                 <p class="article-summary">@article.Summary</p>
                 <button class="read-more" @onclick="(() => SelectArticle(article.Id))">Read More</button>
@@ -46,79 +45,3 @@ else
         NavigationManager.NavigateTo($"/article/{id}");
     }
 }
-<style>
-    /* General Styles */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-    }
-
-    .header {
-        text-align: center;
-        color: red;
-        margin-top: 20px;
-        font-size: 2rem;
-        font-weight:600;
-    }
-
-    /* Loading and No Articles */
-    .loading, .no-articles {
-        text-align: center;
-        font-size: 1.2rem;
-        color: #555;
-    }
-
-    /* Articles Grid */
-    .articles-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-        padding: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    /* Article Card */
-    .article-card {
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 1.5rem;
-        transition: transform 0.3s ease;
-        cursor: pointer;
-    }
-
-        .article-card:hover {
-            transform: translateY(-5px);
-        }
-
-    .article-title {
-        font-size: 1.5rem;
-        color: #0077b6;
-        margin-bottom: 1rem;
-    }
-
-    .article-summary {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-        color: #555;
-    }
-
-    .read-more {
-        background-color: #0077b6;
-        color: #fff;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-        .read-more:hover {
-            background-color: #005f86;
-        }
-
-</style>
