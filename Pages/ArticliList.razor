@@ -2,15 +2,19 @@
 @inject FetchDataServices DataService
 @inject NavigationManager NavigationManager
 
-@if (articles == null)
+@if (isLoading)
 {
     <p class="loading">Loading articles...</p>
+}
+else if (hasError)
+{
+    <p class="error">Failed to load articles. Please try again later.</p>
 }
 else if (articles.Count == 0)
 {
     <p class="no-articles">No articles found.</p>
 }
-else
+else if (articles != null)
 {
     <div class="articles-grid">
         @foreach (var article in articles.OrderBy(t => t.Id))
@@ -27,6 +31,8 @@ else
 
 @code {
     private List<Article> articles;
+    private bool isLoading = true;
+    private bool hasError = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,9 +40,13 @@ else
         {
             articles = await DataService.GetArticlesAsync();
         }
-        catch (Exception ex)
+        catch
         {
-            Console.WriteLine(ex.Message);
+            hasError = true;
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 

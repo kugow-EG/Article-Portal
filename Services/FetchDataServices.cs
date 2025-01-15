@@ -12,26 +12,21 @@ public class FetchDataServices
 
     public async Task<List<Article>> GetArticlesAsync()
     {
-        try
+        var response = await _httpClient.GetAsync("https://ps-dev-1-partnergateway.patientsky.dev/assignment/articles");
+        if (!response.IsSuccessStatusCode)
         {
-            return await _httpClient.GetFromJsonAsync<List<Article>>("https://ps-dev-1-partnergateway.patientsky.dev/assignment/articles");
+            throw new Exception($"Error fetching articles. Status Code: {response.StatusCode}");
         }
-        catch (Exception)
-        {
-            throw new Exception("Failed to fetch articles.");
-        }
+        return await response.Content.ReadFromJsonAsync<List<Article>>() ?? new List<Article>();
     }
 
     public async Task<Article> GetArticleByIdAsync(int id)
     {
-        try
+        var response = await _httpClient.GetAsync($"https://ps-dev-1-partnergateway.patientsky.dev/assignment/articles/{id}");
+        if (!response.IsSuccessStatusCode)
         {
-            return await _httpClient.GetFromJsonAsync<Article>($"https://ps-dev-1-partnergateway.patientsky.dev/assignment/articles/{id}");
+            throw new Exception($"Error fetching article. Status Code: {response.StatusCode}");
         }
-        catch (Exception)
-        {
-            throw new Exception("Failed to fetch the article details.");
-        }
+        return await response.Content.ReadFromJsonAsync<Article>() ?? throw new Exception("Article data is null.");
     }
 }
-

@@ -2,11 +2,16 @@
 @using ArticlePortal.Model
 @inject FetchDataServices DataService
 @inject NavigationManager NavigationManager
-@if (article == null)
+
+@if (isLoading)
 {
     <p>Loading...</p>
 }
-else
+else if (hasError)
+{
+    <p class="error">Failed to load the article. Please try again later.</p>
+}
+else if (article != null)
 {
     <div class="article-card">
         <img src="@($"/images/article_{article.Id}.jpg")" alt="Article Image" class="article-image" />
@@ -22,6 +27,8 @@ else
     public int Id { get; set; }
 
     private Article? article;
+    private bool isLoading = true;
+    private bool hasError = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,16 +36,18 @@ else
         {
             article = await DataService.GetArticleByIdAsync(Id);
         }
-        catch (Exception)
+        catch
         {
-            throw new Exception("Failed to fetch the article.");
+            hasError = true;
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
+
     private void GoBack()
     {
         NavigationManager.NavigateTo("/");
-
     }
-
 }
-
