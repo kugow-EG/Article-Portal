@@ -50,3 +50,15 @@
     .read-more:hover {
         background-color: #005f86;
     }
+.error {
+    color: #b00020;
+    background-color: #ffefef; 
+    border: 1px solid #b00020; 
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px; 
+    margin: 20px auto; 
+    max-width: 500px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
