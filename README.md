@@ -24,7 +24,7 @@ Home.razor : Default landing page of the application.
 
 ##### articlelist.css: Styles for the article list component.
 
-#### Error Handling
+#### Error Handling and State Management
 
 Error Messages
 - Failed to load articles. Please try again later.: Displays if the article list cannot be fetched.
