@@ -30,14 +30,12 @@ Error Messages
 - Failed to load articles. Please try again later.: Displays if the article list cannot be fetched.
 
 - Failed to load the article. Please try again later.: Displays if a specific article cannot be fetched.
-- 
-#### Technologies Used
-Frontend
-Blazor WebAssembly: For building interactive and reusable web components.  
-HTML & CSS: For structuring and styling the application.   
-C#: For implementing Blazor components and application logic. 
-Backend
-HTTPClient: Used to fetch data from the API (simulated in this implementation).  
-Other Tools
-Visual Studio / Visual Studio Code: Recommended IDEs for Blazor and .NET development.
+  
+#### Technologies Used 
+- Blazor WebAssembly: For building interactive and reusable web components.    
+- HTML & CSS: For structuring and styling the application.     
+- C#: For implementing Blazor components and application logic.   
+- HTTPClient: Used to fetch data from the API.  
+Other Tools  
+- Visual Studio 2022:  IDE used for Blazor and .NET development.
 
